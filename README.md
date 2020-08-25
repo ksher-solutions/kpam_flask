@@ -17,10 +17,17 @@ pip install kpam
 
 ## How to use
 
+Private key must include merchant id as a filename.
+
 For testing
 
 ```
-python -m kpam
+python -m kpam --log=absolute_path_to_log_file --cred=absolute_path_to_private_key
+```
+
+Example
+```
+python -m kpam --log=/var/log/kpam.log --cred=/var/credentials/Mch12345_PrivateKey.pem
 ```
 
 For production, it's recommended to run the above under supervisor.
