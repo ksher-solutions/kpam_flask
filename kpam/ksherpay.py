@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from __future__ import print_function
 import os
 import rsa
@@ -15,16 +15,15 @@ class KsherPay(object):
     __GATEWAY_DOMAIN = 'https://gateway.ksher.com/api'
 
     def __init__(self, appid='', privatekey='', pubkey='', version='3.0.0'):
-        self.appid = appid # ksher appid
-        self.privatekey = privatekey # 私钥
-        self.pubkey = pubkey # ksher公钥
-        self.version = version # SDK版本
+        self.appid = appid  # ksher appid
+        self.privatekey = privatekey  # 私钥
+        self.pubkey = pubkey  # ksher公钥
+        self.version = version  # SDK版本
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(KsherPay, "_instance"):
             KsherPay.__instance = object.__new__(cls)
         return KsherPay.__instance
-
 
     def __ksher_sign(self, kwargs):
         """
@@ -95,7 +94,6 @@ class KsherPay(object):
         print('请求{}接口的响应数据:\n {}'.format(url, json.dumps(response, sort_keys=True, indent=4)))
         return response
 
-
     def quick_pay(self, **kwargs):
         """
         B扫C支付
@@ -113,7 +111,6 @@ class KsherPay(object):
         kwargs.update({'appid': self.appid, 'nonce_str': self.__nonce_str, 'time_stamp': self.__time_stamp})
         response = self._request(url='{}/quick_pay'.format(self.__DOMAIN), data=kwargs)
         return response
-
 
     def jsapi_pay(self, **kwargs):
         """
@@ -393,27 +390,3 @@ class KsherPay(object):
         kwargs.update({'appid': self.appid, 'nonce_str': self.__nonce_str, 'time_stamp': self.__time_stamp})
         response = self._request(url='{}/gateway_pay'.format(self.__GATEWAY_DOMAIN), data=kwargs)
         return response
-
-
-if __name__ == '__main__':
-    # Test
-
-    ksher_pay = KsherPay(appid='mch32625', privatekey='./mch_privkey.pem', pubkey='./ksher_pubkey.pem')
-    
-    # Test gateway pay 
-    # response = ksher_pay.gateway_pay(**{
-    #     'mch_order_no': '77721',
-    #     'total_fee': 90,
-    #     'fee_type': 'THB',
-    #     'channel_list': "alipay,linepay,airpay,wechat,bbl_promptpay,truemoney",
-    #     'mch_code': '23111',
-    #     'mch_redirect_url': 'https://www.baidu.com/',
-    #     'mch_redirect_url_fail': 'https://www.baidu.com/',
-    #     'refer_url': 'https://www.baidu.com/',
-    #     'product_name': 'sdd',
-    #     'device': 'H5'
-    # })
-    # print(response)
-    response = ksher_pay.gateway_order_query(**{
-            'mch_order_no': '77721'})
-    print(response)
