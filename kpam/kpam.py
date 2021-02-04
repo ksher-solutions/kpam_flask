@@ -17,7 +17,7 @@ import kpam.ksherpay as ksherpay
 from config import Config
 
 
-PRIVATE_KEY_PATH = current_app.get('PRIVATE_KEY_PATH')
+PRIVATE_KEY_PATH = vars(Config).get('PRIVATE_KEY_PATH')
 DEFAULT_FEE_TYPE = "THB"
 
 

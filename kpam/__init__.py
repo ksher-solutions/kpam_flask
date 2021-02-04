@@ -13,4 +13,6 @@ if not all(required_config in vars(Config) for required_config in required_confi
     error_str =  error_str + "required config:{}".format(required_configs)
     raise Exception(error_str) 
 
+from kpam.kpam import *
+
 
