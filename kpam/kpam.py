@@ -9,26 +9,27 @@
 #  Manage the status of the transaction.
 #
 
-from flask import Flask, request
+from flask import request, current_app
+from kpam import kpam_bp as bp
+from kpam import kpam_logger as _logger
 import kpam.utils as utils
 import kpam.ksherpay as ksherpay
-import logging
+from config import Config
 
-_logger = logging.getLogger("KPAM")
 
-app = Flask(__name__)
+PRIVATE_KEY_PATH = vars(Config).get('PRIVATE_KEY_PATH')
 DEFAULT_FEE_TYPE = "THB"
-PRIVATE_KEY_PATH = None
 
 
-@app.route("/_hc")
+
+@bp.route("/_hc")
 def health_check():
     return {
         "status": "ok"
     }
 
 
-@app.route("/gateway_pay", methods=["POST"])
+@bp.route("/gateway_pay", methods=["POST"])
 def gateway_pay():
     required_fields = [
         "channel_list",
@@ -83,7 +84,7 @@ def gateway_pay():
     return resp
 
 
-@app.route("/gateway_order_query", methods=["POST"])
+@bp.route("/gateway_order_query", methods=["POST"])
 def gateway_order_query():
     required_fields = [
         "mch_order_no"
@@ -109,7 +110,7 @@ def gateway_order_query():
     return resp
 
 
-@app.route("/quick_pay", methods=["POST"])
+@bp.route("/quick_pay", methods=["POST"])
 def quick_pay():
     required_fields = [
         "channel",
@@ -152,7 +153,7 @@ def quick_pay():
     return resp
 
 
-@app.route("/native_pay", methods=["POST"])
+@bp.route("/native_pay", methods=["POST"])
 def native_pay():
     required_fields = [
         "channel",
@@ -193,7 +194,7 @@ def native_pay():
     return resp
 
 
-@app.route("/mini_program_pay", methods=["POST"])
+@bp.route("/mini_program_pay", methods=["POST"])
 def mini_program_pay():
     required_fields = [
         "channel",
@@ -239,7 +240,7 @@ def mini_program_pay():
     return resp
 
 
-@app.route("/app_pay", methods=["POST"])
+@bp.route("/app_pay", methods=["POST"])
 def app_pay():
     required_fields = [
         "mch_order_no",
@@ -290,7 +291,7 @@ def app_pay():
     return resp
 
 
-@app.route("/order_query", methods=["POST"])
+@bp.route("/order_query", methods=["POST"])
 def order_query():
     required_fields = [
         "channel"
@@ -329,7 +330,7 @@ def order_query():
     return resp
 
 
-@app.route("/order_reverse", methods=["POST"])
+@bp.route("/order_reverse", methods=["POST"])
 def order_reverse():
     required_fields = [
         "channel"
@@ -379,7 +380,7 @@ def order_reverse():
     return resp
 
 
-@app.route("/order_refund", methods=["POST"])
+@bp.route("/order_refund", methods=["POST"])
 def order_refund():
     required_fields = [
         "channel",
@@ -436,7 +437,7 @@ def order_refund():
     return resp
 
 
-@app.route("/refund_query", methods=["POST"])
+@bp.route("/refund_query", methods=["POST"])
 def refund_query():
     required_fields = [
         "channel",
@@ -492,7 +493,7 @@ def refund_query():
     return resp
 
 
-@app.route("/rate_query", methods=["POST"])
+@bp.route("/rate_query", methods=["POST"])
 def rate_query():
     required_fields = [
         "channel",
@@ -523,10 +524,3 @@ def rate_query():
     resp = payment.rate_query(**fields)
     return resp
 
-
-def start_server(**kwargs):
-    app.env = kwargs["env"]
-    app.debug = kwargs["debug"]
-    global PRIVATE_KEY_PATH
-    PRIVATE_KEY_PATH = kwargs["cred_key"]
-    app.run()
