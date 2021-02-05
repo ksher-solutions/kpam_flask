@@ -11,6 +11,6 @@ def create_app(config_class=Config):
 
 
     # Adding Content Security Policy to load all content either locally or from omise.co.
-    # Talisman(app)
+    Talisman(app)
 
     return app
