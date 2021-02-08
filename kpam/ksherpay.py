@@ -8,6 +8,8 @@ import binascii
 import requests
 
 
+
+
 class KsherPay(object):
     __nonce_str = (''.join(map(lambda x: (hex(x)[2:]), os.urandom(17))))[:32]
     __time_stamp = time.strftime('%Y%m%d%H%M%S%SS')
@@ -33,9 +35,10 @@ class KsherPay(object):
         """
         alist = sorted(["%s=%s" % (key, str(value)) for key, value in kwargs.items()])
         predata = "".join(alist).encode('utf8')
-        keydata = ''
-        with open(self.privatekey) as f:
-            keydata = f.read()
+        # keydata = self.privatekey
+        # with open(self.privatekey) as f:
+        #     keydata = f.read()
+        keydata = self.privatekey
         privkeystr = rsa.PrivateKey.load_pkcs1(keydata, 'PEM')
         signature = rsa.sign(predata, privkeystr, 'MD5')
         signature = binascii.hexlify(signature)
@@ -56,17 +59,17 @@ class KsherPay(object):
                 pubkey = rsa.PublicKey.load_pkcs1(f.read())
             ecodesign = binascii.unhexlify(signature)
             if rsa.verify(predata, ecodesign, pubkey):
-                print('验签通过......')
+                print('passed the verification......')
                 return True
         except Exception as e:
             # if e.message == 'Verification failed':
-            print('验签失败......')
+            print('Sign verification failed......')
             return False
 
     def _request(self, url, data):
         sign = self.__ksher_sign(data)
         data.update({'sign': sign.decode()})
-        print('请求{}接口的请求数据:\n {}'.format(url, json.dumps(data, sort_keys=True, indent=4)))
+        print('Request {} interface request data:\n {}'.format(url, json.dumps(data, sort_keys=True, indent=4)))
         r = requests.get(url, data, timeout=60)
         response = r.text
         if r.status_code == 200:

@@ -4,7 +4,8 @@ class Config:
     """Config value will be obtaion from environment variable and stored here
     to be use later in flask application.
     """
-    PRIVATE_KEY_PATH = os.environ["PRIVATE_KEY_PATH"]
+    APP_ID = os.environ["APP_ID"]
+    PRIVATE_KEY = os.environ["PRIVATE_KEY"]
     # OMISE_SECRET_KEY = os.environ["OMISE_SECRET_KEY"]
     # OMISE_PUBLIC_KEY = os.environ["OMISE_PUBLIC_KEY"]
     # SECRET_KEY = os.environ["FLASK_SECRET_KEY"]
