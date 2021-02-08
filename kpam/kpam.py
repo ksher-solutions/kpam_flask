@@ -17,7 +17,9 @@ import kpam.ksherpay as ksherpay
 from config import Config
 
 
-PRIVATE_KEY_PATH = vars(Config).get('PRIVATE_KEY_PATH')
+# PRIVATE_KEY = vars(Config).get('PRIVATE_KEY')
+APP_ID = vars(Config).get('APP_ID')
+PRIVATE_KEY = vars(Config).get('PRIVATE_KEY')
 DEFAULT_FEE_TYPE = "THB"
 
 
@@ -42,7 +44,7 @@ def gateway_pay():
     if not utils.validate_required_fields(required_fields=required_fields, data=data):
         return {"error": "Missing Required Fields: {required_fields}".format(required_fields=required_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel_list": data["channel_list"],
@@ -75,7 +77,7 @@ def gateway_pay():
             fields.update({field: data[field]})
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info(f"Gateway Pay: {fields}")
@@ -94,14 +96,14 @@ def gateway_order_query():
     if not utils.validate_required_fields(required_fields=required_fields, data=data):
         return {"error": "Missing Required Fields: {required_fields}".format(required_fields=required_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "mch_order_no": data["mch_order_no"]
     }
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("Gateway Order Query: {fields}".format(fields=fields))
@@ -123,7 +125,7 @@ def quick_pay():
     if not utils.validate_required_fields(required_fields=required_fields, data=data):
         return {"error": "Missing Required Fields: {required_fields}".format(required_fields=required_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel": data["channel"],
@@ -144,7 +146,7 @@ def quick_pay():
             fields.update({field: data[field]})
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("Quick Pay: {fields}".format(fields=fields))
@@ -164,7 +166,7 @@ def native_pay():
     if not utils.validate_required_fields(required_fields=required_fields, data=data):
         return {"error": "Missing Required Fields: {required_fields}".format(required_fields=required_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel": data["channel"],
@@ -185,7 +187,7 @@ def native_pay():
             fields.update({field: data[field]})
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("Native Pay: {fields}".format(fields=fields))
@@ -208,7 +210,7 @@ def mini_program_pay():
     if not utils.validate_required_fields(required_fields=required_fields, data=data):
         return {"error": "Missing Required Fields: {required_fields}".format(required_fields=required_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel": data["channel"],
@@ -231,7 +233,7 @@ def mini_program_pay():
             fields.update({field: data[field]})
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("Mini Program Pay: {fields}".format(fields=fields))
@@ -256,7 +258,7 @@ def app_pay():
     if not utils.validate_required_fields(required_fields=required_fields, data=data):
         return {"error": "Missing Required Fields: {required_fields}".format(required_fields=required_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel": data["channel"],
@@ -282,7 +284,7 @@ def app_pay():
             fields.update({field: data[field]})
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("App Pay: {fields}".format(fields=fields))
@@ -310,7 +312,7 @@ def order_query():
     if not utils.validate_selection_fields(selection_fields=selection_fields, data=data):
         return {"error": "Missing Required Fields: {required_fields}".format(required_fields=required_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel": data["channel"]
@@ -321,7 +323,7 @@ def order_query():
             fields.update({field: data[field]})
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("Order Query: {fields}".format(fields=fields))
@@ -349,7 +351,7 @@ def order_reverse():
     if not utils.validate_selection_fields(selection_fields=selection_fields, data=data):
         return {"error": "Missing One of these Fields: {selection_fields}".format(selection_fields=selection_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel": data["channel"]
@@ -371,7 +373,7 @@ def order_reverse():
             fields.update({field: data[field]})
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("Order Reverse: {fields}".format(fields=fields))
@@ -402,7 +404,7 @@ def order_refund():
     if not utils.validate_selection_fields(selection_fields=selection_fields, data=data):
         return {"error": "Missing One of these Fields: {selection_fields}".format(selection_fields=selection_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel": data["channel"],
@@ -428,7 +430,7 @@ def order_refund():
             fields.update({field: data[field]})
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("Order Refund: {fields}".format(fields=fields))
@@ -459,7 +461,7 @@ def refund_query():
     if not utils.validate_selection_fields(selection_fields=selection_fields, data=data):
         return {"error": "Missing One of these Fields: {selection_fields}".format(selection_fields=selection_fields)}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel": data["channel"],
@@ -484,7 +486,7 @@ def refund_query():
             fields.update({field: data[field]})
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("Refund Query: {fields}".format(fields=fields))
@@ -508,7 +510,7 @@ def rate_query():
     if not utils.validate_datetime(data["date"], fmt):
         return {"error": "Date format is incorrect. Must be in YYYY-mm-dd format"}
 
-    appid = data.get("appid", utils.get_app_id(PRIVATE_KEY_PATH))
+    appid = APP_ID
     fields = {
         "appid": appid,
         "channel": data["channel"],
@@ -516,7 +518,7 @@ def rate_query():
     }
 
     payment = ksherpay.KsherPay(
-        appid=fields["appid"], privatekey=PRIVATE_KEY_PATH
+        appid=fields["appid"], privatekey=PRIVATE_KEY
     )
 
     _logger.info("Rate Query: {fields}".format(fields=fields))
