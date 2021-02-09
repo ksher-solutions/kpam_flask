@@ -11,7 +11,7 @@
 
 from flask import request, current_app
 from kpam import kpam_bp as bp
-# from kpam import kpam_logger as _logger
+from kpam import kpam_logger as _logger
 import kpam.utils as utils
 import kpam.ksherpay as ksherpay
 from config import Config
@@ -22,7 +22,7 @@ APP_ID = vars(Config).get('APP_ID')
 PRIVATE_KEY = vars(Config).get('PRIVATE_KEY')
 DEFAULT_FEE_TYPE = "THB"
 
-_logger = current_app.logger
+
 
 @bp.route("/_hc")
 def health_check():

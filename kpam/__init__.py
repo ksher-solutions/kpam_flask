@@ -3,6 +3,10 @@ import logging
 from config import Config
 
 kpam_logger = logging.getLogger("KPAM")
+consoleHandler = logging.StreamHandler()
+consoleHandler.setLevel(logging.DEBUG)
+kpam_logger.addHandler(consoleHandler)
+
 kpam_bp = Blueprint("kpam", __name__)
 
 # verfiy that all needed config is in config file
