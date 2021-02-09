@@ -9,6 +9,7 @@ flask = "*"
 flask-talisman = "*"
 gunicorn = "*"
 rsa = "*"
+flask-cors = "*"
 
 [dev-packages]
 

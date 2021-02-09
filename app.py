@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_talisman import Talisman
 from config import Config
+from flask_cors import CORS
 
 
 def create_app(config_class=Config):
@@ -9,8 +10,10 @@ def create_app(config_class=Config):
     from kpam import kpam_bp
     app.register_blueprint(kpam_bp)
 
-
-    # Adding Content Security Policy to load all content either locally or from omise.co.
+    # Initiate CORS
+    CORS(app)
+    
+    # Adding Content Security Policy 
     Talisman(app)
 
     return app
