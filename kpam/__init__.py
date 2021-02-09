@@ -4,7 +4,7 @@ from config import Config
 
 kpam_logger = logging.getLogger("KPAM")
 consoleHandler = logging.StreamHandler()
-consoleHandler.setLevel(logging.DEBUG)
+consoleHandler.setLevel(logging.INFO)
 kpam_logger.addHandler(consoleHandler)
 
 kpam_bp = Blueprint("kpam", __name__)
