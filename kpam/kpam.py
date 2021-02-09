@@ -42,7 +42,7 @@ def gateway_pay():
 
     data = request.json
     if not utils.validate_required_fields(required_fields=required_fields, data=data):
-        return {"error": "Missing Required Fields: {required_fields}".format(required_fields=required_fields)}
+        return {"error": "Missing Required Fields: {required_fields}".format(required_fields=required_fields)}, 400
 
     appid = APP_ID
     fields = {
