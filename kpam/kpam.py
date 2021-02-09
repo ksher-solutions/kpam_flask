@@ -109,6 +109,7 @@ def gateway_order_query():
     _logger.info("Gateway Order Query: {fields}".format(fields=fields))
 
     resp = payment.gateway_order_query(**fields)
+    _logger.info("Resp: {resp}".format(resp))
     return resp
 
 
