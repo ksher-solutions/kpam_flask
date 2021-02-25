@@ -1,8 +1,13 @@
 from flask import Blueprint, current_app
 import logging
 from config import Config
+import sys
 
 kpam_logger = logging.getLogger("KPAM")
+consoleHandler = logging.StreamHandler(sys.stdout)
+consoleHandler.setLevel(logging.INFO)
+kpam_logger.addHandler(consoleHandler)
+
 kpam_bp = Blueprint("kpam", __name__)
 
 # verfiy that all needed config is in config file
