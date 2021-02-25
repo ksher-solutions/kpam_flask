@@ -160,7 +160,8 @@ def quick_pay():
 def native_pay():
     required_fields = [
         "channel",
-        "total_fee"
+        "total_fee",
+        "mch_order_no"
     ]
 
     data = request.json
@@ -170,6 +171,7 @@ def native_pay():
     appid = APP_ID
     fields = {
         "appid": appid,
+        "mch_order_no": data["mch_order_no"],
         "channel": data["channel"],
         "total_fee": data["total_fee"],
         "fee_type": data.get("fee_type", DEFAULT_FEE_TYPE)
